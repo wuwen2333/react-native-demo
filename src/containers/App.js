@@ -11,32 +11,13 @@ import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
 import * as homeAction from '../actions/homeAction';
 import Home from '../components/Home';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 function mapStateToProps(state) {
   return {
-    welcomeText: state.home
+    welcomeText: state.home.get('welcomeText')
   };
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(homeAction, dispatch),
@@ -45,6 +26,7 @@ function mapDispatchToProps(dispatch) {
 class App extends Component {
   static propTypes = {
     actions: PropTypes.func,
+    welcomeText: PropTypes.object
   }
   constructor(props) {
     super(props);
@@ -56,8 +38,9 @@ class App extends Component {
     this.props.actions.getWelcomeText(param);
   }
   render() {
+    const welcomeText = this.props.welcomeText || {};
     return (
-      <Home welcomeText={this.props.welcomeText} />
+      <Home welcomeText={welcomeText} />
     );
   }
 }

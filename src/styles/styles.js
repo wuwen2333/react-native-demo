@@ -11,7 +11,7 @@ export default {
 		position: 'relative',
 		flex: 1,
 		flexDirection: 'column',
-		backgroundColor: '#aaaaaa',
+		backgroundColor: '#F5FCFF',
 	},
 	containerCentered: {
     justifyContent: 'center',

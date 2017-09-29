@@ -1,34 +1,22 @@
-import React from 'react';
+/* eslint global-require: 0 */
+
 import Immutable from 'immutable';
 import { Platform } from 'react-native';
-import { applyMiddleware, compose, createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
-import { createLogger } from 'redux-logger';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-// import { Router } from 'react-native-router-flux';
-
-// Consts and Libs
-// import { AppStyles } from '@theme/';
-// import AppRoutes from '@navigation/';
-// import Analytics from '@lib/analytics';
-
-import rootReducer from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import rootSagas from './sagas';
-import App from './containers/App';
+import rootReducer from './reducers';
 
 let composeEnhancers = compose;
-// Connect RNRF with Redux
-// const RouterWithRedux = connect()(Router);
 const sagaMiddleware = createSagaMiddleware();
-// Load middleware
-let middleware = [
-  thunk, // Allows action creators to return functions (not just plain objects)
-];
+
 if (__DEV__) {
   const installDevTools = require('immutable-devtools');
   installDevTools(Immutable);
 
+  // Use it if Remote debugging with RNDebugger, otherwise use remote-redux-devtools
+  /* eslint-disable no-underscore-dangle */
   composeEnhancers = (
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
     require('remote-redux-devtools').composeWithDevTools
@@ -36,24 +24,15 @@ if (__DEV__) {
     name: Platform.OS,
     ...require('../package.json').remotedev,
   });
-  // Dev-only middleware
-  middleware = [
-    ...middleware,
-    sagaMiddleware,
-    createLogger(), // Logs state changes to the dev console
-  ];
+  /* eslint-enable no-underscore-dangle */
 }
-
-
-
-// Init redux store (using the given reducer & middleware)
-const store = composeEnhancers(
-  applyMiddleware(...middleware),
-)(createStore)(rootReducer);
-
-sagaMiddleware.run(rootSagas);
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk,sagaMiddleware),
+);
 
 export default function configureStore(initialState) {
+  const store = createStore(rootReducer, initialState, enhancer);
+  sagaMiddleware.run(rootSagas);
   if (module.hot) {
     module.hot.accept(() => {
       store.replaceReducer(require('./reducers').default);

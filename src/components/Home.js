@@ -5,19 +5,13 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import PropTypes from 'prop-types';
+import { Actions } from 'react-native-router-flux';
+import appStyle from '../styles';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
+  margin10: {
     margin: 10,
   },
   instructions: {
@@ -36,18 +30,18 @@ class Home extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
+      <View style={[appStyle.container,appStyle.containerCentered]}>
+        <Text style={[appStyle.h2,styles.margin10]}>
           {this.props.welcomeText.title}
         </Text>
         <Text style={styles.instructions}>
           {this.props.welcomeText.introduction}
-          {/*To get started, edit index.ios.js*/}
         </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+        <Button title="press me to page" onPress={() => Actions.page()}/>
       </View>
     );
   }
