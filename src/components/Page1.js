@@ -24,21 +24,21 @@ const styles = StyleSheet.create({
   },
 });
 
-class Page extends Component {
+class Page1 extends Component {
   constructor(props) {
     super(props);
   }
   componentDidMount() {
-    console.log('page componentDidMount');
+    console.log('page1 componentDidMount');
   }
   render() {
     return (
       <View style={[appStyle.container,appStyle.containerCentered]}>
         <Text style={appStyle.h2}>
-          Welcome to page.
+          Welcome to page1.
         </Text>
-        <Button title="go to page1" onPress={() => Actions.page1()}/>
-        <Button title="Back" onPress={() => Actions.pop()}/>
+        <Button title="back home" onPress={Actions.home}/>
+        <Button title="Back" onPress={Actions.pop}/>
         <Tabs style={{backgroundColor:'white'}}
                       selectedStyle={{color:'red'}}>
             <Text name="first">First</Text>
@@ -51,4 +51,4 @@ class Page extends Component {
     );
   }
 }
-export default Page;
+export default Page1;

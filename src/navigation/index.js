@@ -14,6 +14,7 @@ import {
 } from 'react-native-router-flux';
 import Home from '../containers/App';
 import Page from '../components/Page';
+import Page1 from '../components/Page1';
 
 const reducerCreate = params => {
   const defaultReducer = new Reducer(params);
@@ -27,10 +28,13 @@ const AppNavigator = () => (
   <Router
     createReducer={reducerCreate}
   >
-    <Stack key="root">
-      <Scene key="home" component={Home} hideNavBar />
-      <Scene key="page" component={Page} title="Page" hideTabBar/>
-    </Stack>
+    <Modal >
+      <Scene key="home" component={Home} hideNavBar/>
+      <Stack key="pages" hideNavBar>
+        <Scene key="page" component={Page} title="Page"/>
+        <Scene key="page1" component={Page1} title="Page1"/>
+      </Stack>
+    </Modal>
   </Router>
 )
 export default AppNavigator;

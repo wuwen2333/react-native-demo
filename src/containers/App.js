@@ -32,6 +32,7 @@ class App extends Component {
     super(props);
   }
   componentDidMount() {
+    console.log('componentDidMount');
     const param = {
       page: 'home'
     }

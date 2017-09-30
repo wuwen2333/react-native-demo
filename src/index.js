@@ -9,11 +9,11 @@ import AppRoutes from './navigation';
 const initialState = {};
 const store = configureStore(initialState);
 const RouterWithRedux = connect()(Router);
+
 export default function AppContainer() {
   return (
     <Provider store={store}>
       <RouterWithRedux scenes={AppRoutes} />
-      {/*<App />*/}
     </Provider>
   );
 }
