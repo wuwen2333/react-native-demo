@@ -3,7 +3,6 @@
 import Immutable from 'immutable';
 import { Platform } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import rootSagas from './sagas';
 import rootReducer from './reducers';
@@ -27,7 +26,7 @@ if (__DEV__) {
   /* eslint-enable no-underscore-dangle */
 }
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk,sagaMiddleware),
+  applyMiddleware(sagaMiddleware),
 );
 
 export default function configureStore(initialState) {
